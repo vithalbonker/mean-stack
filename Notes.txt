@@ -1,0 +1,30 @@
+NPM Commands
++++++++++++++
+npm init -> to create package.json file
+
+npm install -g <package name> -> will install the specified package
+
+npm install -> Will install the dependencies specified in the package.json file
+
+npm start -> Will run the command which is specified in package.json file under "start"
+
+npm cache clean -> Will clean the NPM cache
+
+node app.js (or) node app -> will run the app
+
+
+Installations Required
++++++++++++++++++++++++
+1) Download and install 'Node.js'
+2) Download and install 'Atom' editor
+3) Install the following dependencies:
+      express     -> npm install -g express
+      body-parser -> npm install -g body-parser
+      mongoose    -> npm install -g mongoose
+      cors        -> npm install -g cors
+      passport    -> npm install -g passport
+      nodemon     -> npm install -g nodemon
+
+      Note: If any error is encountered, perform the below alternatives:
+               a) Make sure you are running the above commands from the path where package.json is there
+               b) If above step doesn't resolve, then run the 'npm cache clean' command
