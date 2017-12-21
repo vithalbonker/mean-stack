@@ -1,0 +1,55 @@
+Setting up Mongo DB
+++++++++++++++++++++
+1) Download and run the MongoDB installer. Choose the installation path as 'C:\mongodb'
+2) Go to 'C:\mongodb' directory and create 2 directories as 'data' & 'log'. Under 'data' directory, create one more
+   directory with name as 'db'
+3) Open the command prompt as administrator and go to 'C:\mongodb\bin' directory
+4) Run the below command:
+    mongod --directoryperdb --dbpath C:\mongodb\data\db --logpath C:\mongodb\log\mongo.log --logappend --rest --install
+
+   The above command output will be as follows:
+
+   2017-12-21T15:44:22.437+0530 I CONTROL  [main] ** WARNING: --rest is specified without --httpinterface,
+   2017-12-21T15:44:22.439+0530 I CONTROL  [main] **          enabling http interface
+
+5) Run the below command:
+    net start MongoDB
+
+    Output of the command is shown below:
+
+    The MongoDB service is starting...
+    The MongoDB service was started successfully.
+
+6) To run the mongo shell, just run the below command:
+    mongo
+
+MongoDB Commands
+++++++++++++++++
+show dbs -> will list all the databases
+db -> Will show the current DB in use
+use mycustomers -> creates the mycustomers DB and switches to it
+db.createCollection('customers'); - > Creates the collection(table in SQL language) under 'mycustomers' DB
+show collections -> Will show the collections available in DB
+db.customers.insert({first_name:"John", last_name:"Doe"}); -> inserts single customer into 'customers' collection
+db.customers.insert([{first_name:"Steven", last_name:"Smith"}, {first_name:"Joan", last_name:"Johnson", gender:"female"}]); -> inserts 2 customers into 'customers' collection
+db.customers.find(); -> will show all customers in the 'customers' table
+db.customers.find().pretty(); -> will show all customers in the 'customers' table in a pretty manner
+db.customers.update({first_name:"John"},{first_name:"John", last_name:"Doe", gender:"male"}); -> to update customer. first parameter is filter criteria then second parameter we need to provide the entire record to be updated
+db.customers.update({first_name:"Steven"},{$set:{gender:"male"}}); -> set operator is used to update the record
+db.customers.update({first_name:"Steven"},{$set:{age:45}}); -> will set a new field with name as 'age'
+db.customers.update({first_name:"Steven"},{$inc:{age:5}}); -> Will increment the age by 5 using increment operator
+db.customers.update({first_name:"Steven"},{$unset:{age:1}}); -> will remove 'age' for 'Steven'
+db.customers.update({first_name:"Mary"},{first_name:"Mary", last_name:"Samson"},{upsert:true}); -> insert 'Mary' if already doesn't exist
+db.customers.update({first_name:"Steven"},{$rename:{"gender":"sex"}}); -> will rename the 'gender' to 'sex'
+db.customers.remove({first_name:"Steven"}); -> Will remove all customers with 'first_name' as 'Steven'
+db.customers.find({$or:[{first_name:"Sharon"},{first_name:"Beth"}]}); -> using or operator to retrieve customers
+db.customers.find({age:{$lt:40}}); -> to retrieve customers whose age < 40
+    similarly, gt, lte, gte can be used in the above command
+db.customers.find({"address.city":"Boston"}); -> to find the record which is inside array object
+db.customers.find().sort({last_name:1}); -> To sort the records in ascending order
+db.customers.find().sort({last_name:-1}); -> To sort the records in descending order
+db.customers.find().count(); -> Will give the total count of the records
+db.customers.find({gender:"male"}).count(); -> To get the male records count
+db.customers.find().limit(4); -> Will display the first 4 records
+db.customers.find().limit(4).sort({last_name:1}); -> limit & sort can be combined together
+db.customers.find().forEach(function(doc){print("Customer Name:" + doc.first_name + " " + doc.last_name)}); -> Will iterate through each record that is found and retrieve specific attributes
